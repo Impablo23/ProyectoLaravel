@@ -7,13 +7,22 @@
             <h2>Registrarse: </h2>
             <form action="">
                 <label class="form-label">Nombre Completo</label>
-                <input type="text" id="nombre" class="form-control">
+                <input type="text" id="nombre_user" name="nombre_user" class="form-control" [(ngModel)]="nombre_user">
+                <div class="form-text" style="color: white;margin-bottom: 10px;">
+                    El nombre de usuario debe tener al menos 5 letras
+                </div>
                 <label class="form-label">Email</label>
-                <input type="email" id="email" class="form-control">
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="email">
+                <div class="form-text" style="color: white;margin-bottom: 10px;">
+                    El email debe contener @
+                </div>
                 <label class="form-label">Password</label>
-                <input type="password" id="pass" class="form-control">
-    
-                <button>
+                <input type="password" id="password" name="password" class="form-control" [(ngModel)]="password">
+                <div class="form-text" style="color: white;margin-bottom: 10px;">
+                    La contraseña debe tener al menos 8 letras
+                </div>
+
+                <button type="submit" (click)="registrarUsuario()">
                     <div class="svg-wrapper-1">
                         <div class="svg-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -26,11 +35,11 @@
                     </div>
                     <span>Crear Cuenta</span>
                 </button>
-    
+
                 <br>
-    
+
                 <p>¿Ya tienes una cuenta? Inicia Sesión <a href="./auth/login">Aquí</a></p>
-    
+
             </form>
         </div>
     </div>
