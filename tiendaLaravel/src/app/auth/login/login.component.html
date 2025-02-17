@@ -7,16 +7,16 @@
             <h2>Iniciar Sesión: </h2>
             <form action="">
                 <label for="inputPassword5" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control">
+                <input type="email" id="email" class="form-control" [(ngModel)]="email">
                 <div class="form-text" style="color: white;margin-bottom: 10px;">
                     El email debe contener @
                 </div>
                 <label for="inputPassword5" class="form-label">Password</label>
                 <input type="password" id="pass" class="form-control">
-                <div class="form-text" style="color: white;margin-bottom: 10px;">
+                <div class="form-text" style="color: white;margin-bottom: 10px;" [(ngModel)]="password">
                     La contraseña debe tener al menos 8 letras
                 </div>
-    
+
                 <button>
                     <div class="svg-wrapper-1">
                         <div class="svg-wrapper">
@@ -30,11 +30,11 @@
                     </div>
                     <span>Iniciar Sesión</span>
                 </button>
-    
+
                 <br>
-    
+
                 <p>¿Todav&iacute;a no tienes una cuenta? Registrate <a href="./auth/register">Aquí</a></p>
-    
+
             </form>
         </div>
     </div>
