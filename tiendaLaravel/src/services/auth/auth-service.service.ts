@@ -13,8 +13,8 @@ export class AuthServiceService {
 
   private url: string = environmentsApi.baseUrl
 
-  verificarUsuario(email: string, password: string) : Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(`${this.url}/email/${email}/password/${password}`);
+  verificarUsuario(email: string, password: string) : Observable<Usuario>{
+    return this.http.get<Usuario>(`${this.url}/email/${email}/password/${password}`);
   }
 
   addUsuario(usuario: Usuario): Observable<string> {

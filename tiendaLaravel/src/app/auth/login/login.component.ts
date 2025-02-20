@@ -43,7 +43,7 @@ export class LoginComponent {
     this.authService
       .verificarUsuario(this.email, this.password)
       .subscribe((usuarios) => {
-        let userSeleccionado = usuarios[0];
+        let userSeleccionado = usuarios;
 
         if (userSeleccionado) {
           const editUser: Usuario = {

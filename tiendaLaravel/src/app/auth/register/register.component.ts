@@ -59,7 +59,7 @@ export class RegisterComponent {
     this.authService
       .verificarUsuario(this.email, this.password)
       .subscribe((usuarios) => {
-        let userSeleccionado = usuarios[0];
+        let userSeleccionado = usuarios;
 
         if (!userSeleccionado) {
           const nuevoUser: Usuario = {

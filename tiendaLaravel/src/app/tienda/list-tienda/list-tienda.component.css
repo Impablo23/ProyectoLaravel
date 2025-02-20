@@ -18,11 +18,11 @@ h1 {
 }
 
 #add-producto {
-  width: 95%;
+  width: 85%;
   float: left;
 }
 #carrito {
-  width: 5%;
+  width: 15%;
   float: right;
 }
 
@@ -31,4 +31,8 @@ h1 {
   margin: auto;
   width: 60%;
   margin-top: 50px;
+}
+
+.w20 {
+  width: 50%;
 }

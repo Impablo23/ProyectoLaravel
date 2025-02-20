@@ -24,6 +24,7 @@ BBDD Proyecto Laravel
 	VENTAS: 
 		ID int pk ai
 		id_usuario_fk int
+		estado_venta varchar(100)
 		lista_productos {id_producto: valor, cantidad: valor}
 		total int
 	
