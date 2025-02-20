@@ -27,7 +27,7 @@ export class ListTiendaComponent {
   public listadoProductos: Producto[] = [];
 
   ngOnInit() {
-    sessionStorage.setItem('rol_id', '2');
+    sessionStorage.setItem('rol_id', '1');
     sessionStorage.setItem('id_usuario', '15');
     this.rol_id = sessionStorage.getItem('rol_id')!;
     this.id_usuario = parseInt(sessionStorage.getItem('id_usuario')!);
@@ -46,6 +46,10 @@ export class ListTiendaComponent {
 
   public comprasPage() {
     this.router.navigate(['./tienda/compra']);
+  }
+
+  public pedidosPage() {
+    this.router.navigate(['./tienda/pedidos']);
   }
 
 
