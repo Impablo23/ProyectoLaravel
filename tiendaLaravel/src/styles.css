@@ -19,3 +19,4 @@ body {
     background-size: calc(var(--s) / 4.667) var(--s),
         var(--s) calc(var(--s) / 4.667);
 }
+
