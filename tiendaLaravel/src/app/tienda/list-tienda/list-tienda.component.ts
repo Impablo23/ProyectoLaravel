@@ -20,18 +20,20 @@ export class ListTiendaComponent {
 
   public rol_id: string = '';
   public id_usuario: number = 0;
-  public id: number = 0;
+  public nombre_usuario: string = '';
+
 
   public stockCompra: number = 0;
 
   public listadoProductos: Producto[] = [];
 
-  ngOnInit() {
-    sessionStorage.setItem('rol_id', '1');
-    sessionStorage.setItem('id_usuario', '15');
+  async ngOnInit() {
+    this.nombre_usuario = sessionStorage.getItem('nombre_user')!;
     this.rol_id = sessionStorage.getItem('rol_id')!;
-    this.id_usuario = parseInt(sessionStorage.getItem('id_usuario')!);
-    this.listadoProductos = this.tiendaService.listadoProductos;
+    this.id_usuario = parseInt(sessionStorage.getItem('id')!);
+    await this.tiendaService.getProductos().subscribe(productos => {
+      this.listadoProductos = productos;
+    })
   }
 
   public addPage() {
@@ -79,13 +81,13 @@ export class ListTiendaComponent {
 
     this.tiendaService.getVentaCurso(this.id_usuario).subscribe(
       venta => {
-        let ventaCurso = venta;
+        let ventaCurso = venta && venta.length > 0 ? venta[0] : null;
 
         if (!ventaCurso) {
-
+          // Si no existe venta, creamos una nueva
           const nuevaVenta: Venta = {
             id: 0,
-            id_usuario: (this.id_usuario),
+            id_usuario: this.id_usuario,
             estado_venta: 'curso',
             lista_productos: [
               {
@@ -96,75 +98,79 @@ export class ListTiendaComponent {
             total: 0
           };
 
-          console.log(nuevaVenta);
-
-
           this.tiendaService.addVenta(nuevaVenta).subscribe(
             respuesta => {
-
               const productoEditado: Producto = {
                 id: producto.id,
                 nombre_producto: producto.nombre_producto,
                 precio_unidad: producto.precio_unidad,
                 stock: producto.stock - this.stockCompra
-              }
+              };
 
               this.tiendaService.editProducto(productoEditado).subscribe(
                 respuesta => {
                   this.toast.open(
                     'Producto Añadido a tu cesta de la compra',
                     'Dabuten',
-                    {
-                      duration: 3000,
-                    }
+                    { duration: 3000 }
                   );
                   this.router.navigate(['./tienda']);
+                },
+                error => {
+                  console.error('Error al actualizar el producto:', error);
+                  this.toast.open('Error al actualizar el producto', 'Error', { duration: 3000 });
                 }
               );
-
+            },
+            error => {
+              console.error('Error al crear la venta:', error);
+              this.toast.open('Error al crear la venta', 'Error', { duration: 3000 });
             }
           );
-
         } else {
-          ventaCurso.lista_productos.push(
-            {
-              id_producto: producto.id,
-              cantidad: this.stockCompra
-            }
-          );
-
-          // ventaCurso.total = ventaCurso.total + (producto.precio_unidad * this.stockCompra);
+          // Si ya existe una venta, agregamos el producto
+          ventaCurso.lista_productos.push({
+            id_producto: producto.id,
+            cantidad: this.stockCompra
+          });
 
           this.tiendaService.editVenta(ventaCurso).subscribe(
             respuesta => {
-
               const productoEditado: Producto = {
                 id: producto.id,
                 nombre_producto: producto.nombre_producto,
                 precio_unidad: producto.precio_unidad,
                 stock: producto.stock - this.stockCompra
-              }
+              };
 
               this.tiendaService.editProducto(productoEditado).subscribe(
                 respuesta => {
                   this.toast.open(
                     'Producto Añadido a tu cesta de la compra',
                     'Dabuten',
-                    {
-                      duration: 3000,
-                    }
+                    { duration: 3000 }
                   );
-                  this.router.navigate(['./tienda']);
+                  window.location.reload();
+                },
+                error => {
+                  console.error('Error al actualizar el producto:', error);
+                  this.toast.open('Error al actualizar el producto', 'Error', { duration: 3000 });
                 }
               );
+            },
+            error => {
+              console.error('Error al editar la venta:', error);
+              this.toast.open('Error al actualizar la venta', 'Error', { duration: 3000 });
             }
           );
-
         }
-
-
+      },
+      error => {
+        console.error('Error al obtener la venta:', error);
+        this.toast.open('Error al obtener la venta', 'Error', { duration: 3000 });
       }
     );
+
 
 
 

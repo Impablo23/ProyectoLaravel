@@ -1,1 +1,1 @@
-export const environmentsApi = {baseUrl:'http://127.0.0.1:8000/api'}
+export const environmentsApi = {baseUrl:'http://62.171.176.60:9000/api'}

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ListaProductos } from 'src/interfaces/listaProducto.interface';
 import { Venta } from 'src/interfaces/venta.interface';
 import { TiendaServiceService } from 'src/services/tienda/tienda-service.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-ventas',
@@ -18,27 +20,34 @@ export class VentasComponent {
   ) { }
 
   public ventaUsuarioCurso!: Venta;
+  public listaProductosUsuarioCurso!: ListaProductos[];
   public id_usuario: number = 0;
 
-  ngOnInit() {
-    this.id_usuario = parseInt(sessionStorage.getItem('id_usuario')!);
-    this.ventaUsuarioCurso = this.tiendaService.ventas.find(venta => venta.id_usuario === this.id_usuario && venta.estado_venta === 'curso')!;
-    console.log(this.ventaUsuarioCurso);
+  async ngOnInit() {
+    this.id_usuario = parseInt(sessionStorage.getItem('id')!);
+    await this.tiendaService.getVentaCurso(this.id_usuario).subscribe(venta => {
+      this.ventaUsuarioCurso = venta[0];
+      this.listaProductosUsuarioCurso = venta[0].lista_productos;
+      console.log(this.listaProductosUsuarioCurso[0].id_producto);
+
+
+    })
   }
 
-  public getNombreProducto(id: number): string {
-    // let nombre_producto = '';
-    // this.tiendaService.getProductoById(id).subscribe(
-    //   producto => {
-    //     nombre_producto = producto.nombre_producto;
-    //   }
-    // );
-    // return nombre_producto;
-
-    let producto = this.tiendaService.listadoProductos.find(producto => producto.id === id);
-
-    return producto!.nombre_producto;
+  public async getNombreProducto(id: number): Promise<string> {
+    let nombre = '';
+    try {
+      await this.tiendaService.getProductoById(id).subscribe(producto => {
+        nombre = producto.nombre_producto;
+      })
+    } catch (error) {
+      console.error('Error al obtener el producto:', error);
+      return '';
+    }
+    return nombre;
   }
+  
+  
 
   public deleteProductoVenta(id: number) {
 
@@ -72,23 +81,20 @@ export class VentasComponent {
     }
   }
 
-  public  getTotalVenta() : number {
-    let total = 0;
-    for (let i = 0; i < this.ventaUsuarioCurso.lista_productos.length; i++) {
-      // await this.tiendaService.getProductoById(this.ventaUsuarioCurso.lista_productos[i].id_producto).subscribe(
-      //   producto => {
-      //     total += producto.precio_unidad * this.ventaUsuarioCurso.lista_productos[i].cantidad;
-      //   }
-      // );
-      let producto = this.tiendaService.listadoProductos.find(producto => producto.id === this.ventaUsuarioCurso.lista_productos[i].id_producto);
-      total += producto!.precio_unidad * this.ventaUsuarioCurso.lista_productos[i].cantidad;
-    }
-    return total;
-  }
+  // public async getTotalVenta(): Promise<number> {
+  //   let total = 0;
+  //   for (let i = 0; i < this.listaProductosUsuarioCurso.length; i++) {
+  //     // const respuestaProducto = await this.tiendaService.getProductoById(this.listaProductosUsuarioCurso[i].id_producto).toPromise();
+  //     // total += respuestaProducto!.precio_unidad * this.listaProductosUsuarioCurso[i].cantidad;
+  //     // let producto = this.tiendaService.listadoProductos.find(producto => producto.id === this.ventaUsuarioCurso.lista_productos[i].id_producto);
+  //     // total += producto!.precio_unidad * this.ventaUsuarioCurso.lista_productos[i].cantidad;
+  //   }
+  //   return total;
+  // }
 
-  public finalizarVenta() {
+  public async finalizarVenta() {
     this.ventaUsuarioCurso.estado_venta = 'finalizado';
-    this.ventaUsuarioCurso.total = this.getTotalVenta();
+    // this.ventaUsuarioCurso.total = await this.getTotalVenta();
     this.tiendaService.editVenta(this.ventaUsuarioCurso).subscribe(
       respuesta => {
         this.toast.open('Compra finalizada con Éxito', 'Dabuten', {

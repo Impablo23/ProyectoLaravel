@@ -17,12 +17,16 @@ export class PedidosComponent {
     private toast: MatSnackBar,
   ) { }
 
-  public ventaUsuarioFinalizado!: Venta[];
+  public ventasFinalizado!: Venta[];
   public id_usuario: number = 0;
 
   ngOnInit() {
-    this.id_usuario = parseInt(sessionStorage.getItem('id_usuario')!);
-    this.ventaUsuarioFinalizado = this.tiendaService.ventas.filter(venta => venta.id_usuario === this.id_usuario && venta.estado_venta === 'finalizado')!;
+    this.id_usuario = parseInt(sessionStorage.getItem('id')!);
+    this.tiendaService.getVentaFinalizada().subscribe(
+      finalizadas => {
+        this.ventasFinalizado = finalizadas;
+      }
+    );
   }
 
   public getNombreProducto(id: number): string {

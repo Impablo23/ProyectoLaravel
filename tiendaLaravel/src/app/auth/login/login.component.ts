@@ -45,7 +45,7 @@ export class LoginComponent {
       .subscribe((usuarios) => {
         let userSeleccionado = usuarios;
 
-        if (userSeleccionado) {
+        if (Object.keys(userSeleccionado).length !== 0) {
           const editUser: Usuario = {
             id: userSeleccionado.id,
             rol_id: userSeleccionado.rol_id,

@@ -60,8 +60,10 @@ export class RegisterComponent {
       .verificarUsuario(this.email, this.password)
       .subscribe((usuarios) => {
         let userSeleccionado = usuarios;
+        console.log(userSeleccionado);
+        
 
-        if (!userSeleccionado) {
+        if (Object.keys(userSeleccionado).length === 0) {
           const nuevoUser: Usuario = {
             id: 0,
             rol_id: 2,

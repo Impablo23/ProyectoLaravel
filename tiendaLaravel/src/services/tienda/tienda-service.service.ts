@@ -119,8 +119,8 @@ export class TiendaServiceService {
   // ---------------------------------------VENTAS-----------------------------------------------
   // --------------------------------------------------------------------------------------------
 
-  getVentaCurso(id_usuario: number): Observable<Venta> {
-    return this.http.get<Venta>((`${this.url}/venta/curso/${id_usuario}`));
+  getVentaCurso(id_usuario: number): Observable<Venta[]> {
+    return this.http.get<Venta[]>((`${this.url}/venta/curso/${id_usuario}`));
   }
   getVentaFinalizada(): Observable<Venta[]> {
     return this.http.get<Venta[]>((`${this.url}/venta/finalizada`));
