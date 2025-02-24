@@ -7,6 +7,7 @@ import { AddProductoComponent } from './productos-crud/add-producto/add-producto
 import { LayoutProductoComponent } from './productos-crud/layout-producto/layout-producto.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { AdminGuard } from '../guards/tienda.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: 'listado', component: ListTiendaComponent },
       { path: 'compra', component: VentasComponent },
-      { path: 'pedidos', component: PedidosComponent },
+      { path: 'pedidos', component: PedidosComponent, canActivate: [AdminGuard] },
       { path: 'producto', loadChildren: () => import('./productos-crud/productos-crud.module').then(m => m.ProductosCrudModule) },
       { path: '**', redirectTo: 'listado' },
     ]

@@ -31,11 +31,11 @@
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" >
                     <div class="accordion-body">
-                        <ul>
-                            <li *ngFor="let venta of listaProductosUsuarioCurso">
-                               PRODUCTO: {{ venta.id_producto }} - CANTIDAD: {{ venta.cantidad }} ======> <a style="color: red;" (click)="deleteProductoVenta(venta.id_producto)">Borrar</a>
-                            </li> 
-                        </ul>
+                        <div *ngFor="let venta of listaProductosUsuarioCurso">
+                          <div class="alert alert-primary" role="alert">
+                            PRODUCTO: {{ venta.id_producto }} - CANTIDAD: {{ venta.cantidad }} ==> <a style="color: red;" (click)="deleteProductoVenta(venta.id_producto)">Borrar</a>
+                          </div>
+                        </div>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Finalizar Compra</button>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -45,7 +45,7 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                  <!-- ¿Estás seguro de finalizar la compra? El importe total será de unos {{getTotalVenta()}}€ -->
+                                  ¿Estás seguro de finalizar la compra?
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

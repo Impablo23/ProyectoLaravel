@@ -4,6 +4,7 @@ import { AddProductoComponent } from './add-producto/add-producto.component';
 import { EditProductoComponent } from './edit-producto/edit-producto.component';
 import { DeleteProductoComponent } from './delete-producto/delete-producto.component';
 import { LayoutProductoComponent } from './layout-producto/layout-producto.component';
+import { AdminGuard } from 'src/app/guards/tienda.guard';
 
 const routes: Routes = [
   {
@@ -11,9 +12,9 @@ const routes: Routes = [
     path: '',
     component: LayoutProductoComponent,
     children: [
-      { path: 'add', component: AddProductoComponent },
-      { path: 'edit/:id', component: EditProductoComponent },
-      { path: 'delete/:id', component: DeleteProductoComponent },
+      { path: 'add', component: AddProductoComponent, canActivate: [AdminGuard] },
+      { path: 'edit/:id', component: EditProductoComponent, canActivate: [AdminGuard] },
+      { path: 'delete/:id', component: DeleteProductoComponent, canActivate: [AdminGuard] },
       { path: '', redirectTo: 'add', pathMatch: 'full' },
       { path: '**', redirectTo: 'add' },
     ]

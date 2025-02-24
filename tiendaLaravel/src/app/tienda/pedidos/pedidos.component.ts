@@ -29,20 +29,6 @@ export class PedidosComponent {
     );
   }
 
-  public getNombreProducto(id: number): string {
-    // let nombre_producto = '';
-    // this.tiendaService.getProductoById(id).subscribe(
-    //   producto => {
-    //     nombre_producto = producto.nombre_producto;
-    //   }
-    // );
-    // return nombre_producto;
-
-    let producto = this.tiendaService.listadoProductos.find(producto => producto.id === id);
-
-    return producto!.nombre_producto;
-  }
-
   public volver() {
     this.router.navigate(['/tienda']);
   }

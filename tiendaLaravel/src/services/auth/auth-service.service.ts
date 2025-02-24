@@ -24,5 +24,4 @@ export class AuthServiceService {
   editUsuario(usuario: Usuario): Observable<string> {
     return this.http.post<string>(`${this.url}/user/edit`, usuario);
   }
-
 }

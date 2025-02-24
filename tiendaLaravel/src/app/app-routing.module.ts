@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService, HomeGuardService } from './guards/tienda.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-    // canActivate: [AuthGuardService]
+    canActivate: [HomeGuardService]
     // canActivate: [HomeGuardService]
   },
   {
     path: 'tienda',
     loadChildren: () => import('./tienda/tienda.module').then(m => m.TiendaModule),
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
     // canMatch: [canMatchGuard]
   },
   {

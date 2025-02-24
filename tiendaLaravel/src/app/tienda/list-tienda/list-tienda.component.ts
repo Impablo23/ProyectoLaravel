@@ -114,7 +114,7 @@ export class ListTiendaComponent {
                     'Dabuten',
                     { duration: 3000 }
                   );
-                  this.router.navigate(['./tienda']);
+                  window.location.reload();
                 },
                 error => {
                   console.error('Error al actualizar el producto:', error);
@@ -170,10 +170,11 @@ export class ListTiendaComponent {
         this.toast.open('Error al obtener la venta', 'Error', { duration: 3000 });
       }
     );
+  }
 
-
-
-
+  public logout() {
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }
