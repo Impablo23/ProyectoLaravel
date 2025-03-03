@@ -33,7 +33,7 @@
 
             <div *ngFor="let producto of venta.lista_productos">
               <div class="alert alert-primary" role="alert">
-                PRODUCTO NÚMERO {{ producto.id_producto }} - CANTIDAD: {{ producto.cantidad }}
+                PRODUCTO: {{getNombreProducto( producto.id_producto )}} - CANTIDAD: {{ producto.cantidad }}
               </div>
             </div>
 

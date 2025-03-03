@@ -33,7 +33,8 @@ export class ListTiendaComponent {
     this.id_usuario = parseInt(sessionStorage.getItem('id')!);
     await this.tiendaService.getProductos().subscribe(productos => {
       this.listadoProductos = productos;
-    })
+    });
+
   }
 
   public addPage() {
@@ -114,7 +115,9 @@ export class ListTiendaComponent {
                     'Dabuten',
                     { duration: 3000 }
                   );
-                  window.location.reload();
+                  this.tiendaService.getProductos().subscribe(productos => {
+                    this.listadoProductos = productos;
+                  })
                 },
                 error => {
                   console.error('Error al actualizar el producto:', error);
@@ -150,7 +153,9 @@ export class ListTiendaComponent {
                     'Dabuten',
                     { duration: 3000 }
                   );
-                  window.location.reload();
+                  this.tiendaService.getProductos().subscribe(productos => {
+                    this.listadoProductos = productos;
+                  })
                 },
                 error => {
                   console.error('Error al actualizar el producto:', error);

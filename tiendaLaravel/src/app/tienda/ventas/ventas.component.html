@@ -2,7 +2,7 @@
 
     <h1>ElectronicShop</h1>
 
-    <h3>Bienvenido Usuario</h3>
+    <h3>Bienvenido, {{nombre_usuario}}</h3>
 
     <div class="acciones">
         <div id="add-producto">
@@ -33,7 +33,7 @@
                     <div class="accordion-body">
                         <div *ngFor="let venta of listaProductosUsuarioCurso">
                           <div class="alert alert-primary" role="alert">
-                            PRODUCTO: {{ venta.id_producto }} - CANTIDAD: {{ venta.cantidad }} ==> <a style="color: red;" (click)="deleteProductoVenta(venta.id_producto)">Borrar</a>
+                            PRODUCTO: {{getNombreProducto( venta.id_producto )}} - CANTIDAD: {{ venta.cantidad }} ==> <a style="color: red;" (click)="deleteProductoVenta(venta.id_producto)">Borrar</a>
                           </div>
                         </div>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Finalizar Compra</button>

@@ -17,14 +17,16 @@ export class VentasComponent {
     private router: Router,
     private tiendaService: TiendaServiceService,
     private toast: MatSnackBar
-  ) {}
+  ) { }
 
   public ventaUsuarioCurso!: Venta;
   public listaProductosUsuarioCurso!: ListaProductos[];
   public listaDatosProductos: Producto[] = [];
   public id_usuario: number = 0;
+  public nombre_usuario: string = '';
 
   async ngOnInit() {
+    this.nombre_usuario = sessionStorage.getItem('nombre_user')!;
     this.id_usuario = parseInt(sessionStorage.getItem('id')!);
     await this.tiendaService
       .getVentaCurso(this.id_usuario)
@@ -42,6 +44,7 @@ export class VentasComponent {
       });
 
   }
+
 
   public deleteProductoVenta(id: number) {
     let indexProducto = this.ventaUsuarioCurso.lista_productos.findIndex(
@@ -82,7 +85,6 @@ export class VentasComponent {
 
   public async finalizarVenta() {
     this.ventaUsuarioCurso.estado_venta = 'finalizado';
-    // this.ventaUsuarioCurso.total = await this.getTotalVenta();
     this.tiendaService
       .editVenta(this.ventaUsuarioCurso)
       .subscribe((respuesta) => {
@@ -95,5 +97,10 @@ export class VentasComponent {
 
   public volver() {
     this.router.navigate(['/tienda']);
+  }
+
+  public getNombreProducto(id: number) {
+    let producto = this.listaDatosProductos.find(producto => producto.id === id);
+    return producto!.nombre_producto;
   }
 }
