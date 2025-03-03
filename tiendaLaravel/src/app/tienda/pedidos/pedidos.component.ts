@@ -19,8 +19,10 @@ export class PedidosComponent {
 
   public ventasFinalizado!: Venta[];
   public id_usuario: number = 0;
+  public nombre_usuario: string = '';
 
   ngOnInit() {
+    this.nombre_usuario = sessionStorage.getItem('nombre_user')!;
     this.id_usuario = parseInt(sessionStorage.getItem('id')!);
     this.tiendaService.getVentaFinalizada().subscribe(
       finalizadas => {
